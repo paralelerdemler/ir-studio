@@ -1,0 +1,23 @@
+[
+  {
+    "brand": "Ar\u00e7elik",
+    "model": "Unknown",
+    "name": "Power On 22C Fan2",
+    "state": {
+      "power": true,
+      "mode": "cool",
+      "temperature": 22,
+      "fan": 2,
+      "vertical_swing": false,
+      "horizontal_swing": null,
+      "clean": false,
+      "sleep": null,
+      "eco": null,
+      "display": null
+    },
+    "code": "JgBAAF4AAT4PNA4TDhMOEg80DxIPEg8SDxIOEw4TDhMOEw4TDhMOEw4SDzQPNA41DjUOEg8SDzQPEg8SDhMPEg4ADQU=",
+    "length": 68,
+    "id": "72ed9da3-3932-4c5c-9593-2532b6b24bbd",
+    "created_at": 1782474721.4670038
+  }
+]
