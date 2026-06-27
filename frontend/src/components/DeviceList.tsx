@@ -1,9 +1,4 @@
-type Device = {
-  ip: string;
-  port: number;
-  mac: string;
-  type: number;
-};
+import type { Device } from "../types/device";
 
 type Props = {
   devices: Device[];
@@ -17,7 +12,10 @@ function DeviceList({ devices }: Props) {
 
         <div className="device">
           <strong>No Broadlink device found</strong>
-          <span>Make sure your device is powered on and connected.</span>
+          <span>
+            Make sure your Broadlink device is powered on and connected to the
+            same network.
+          </span>
         </div>
       </div>
     );

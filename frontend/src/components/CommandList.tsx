@@ -6,52 +6,105 @@ type Props = {
   onDelete: (id: string) => void;
 };
 
-function CommandList({ commands, onSend, onDelete }: Props) {
+function modeIcon(mode?: string) {
+  switch (mode) {
+    case "cool":
+      return "❄️";
+
+    case "heat":
+      return "🔥";
+
+    case "dry":
+      return "💧";
+
+    case "fan":
+      return "🌀";
+
+    case "auto":
+      return "⚙️";
+
+    default:
+      return "📡";
+  }
+}
+
+function modeTitle(mode?: string) {
+  if (!mode) return "UNKNOWN";
+
+  return mode.toUpperCase();
+}
+
+function CommandList({
+  commands,
+  onSend,
+  onDelete,
+}: Props) {
   if (commands.length === 0) {
     return (
-      <div className="device">
-        <strong>No commands learned yet</strong>
-        <span>Learn your first IR command to get started.</span>
+      <div className="device-list">
+        <h2>Command Library</h2>
+
+        <div className="device">
+          <strong>No commands yet</strong>
+
+          <span>
+            Learn your first infrared command to start building your library.
+          </span>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="device-list">
-      <h2>Commands</h2>
+      <h2>Command Library</h2>
 
       {commands.map((command) => (
         <div className="device" key={command.id}>
-          <strong>{command.name}</strong>
+          <strong>
+            {modeIcon(command.state?.mode)}{" "}
+            {modeTitle(command.state?.mode)}
+          </strong>
 
           <span>
-            {command.brand ?? "Unknown"} • {command.model ?? "Unknown"}
+            {command.state?.temperature
+              ? `${command.state.temperature}°C`
+              : "--"}
           </span>
 
-          {command.state && (
-            <small>
-              {command.state.mode.toUpperCase()}
-              {command.state.temperature
-                ? ` • ${command.state.temperature}°C`
-                : ""}
-              {command.state.fan ? ` • Fan ${command.state.fan}` : ""}
-              {command.state.vertical_swing ? " • Swing" : ""}
-              {command.state.clean ? " • Clean" : ""}
-            </small>
-          )}
+          <small>
+            Fan {command.state?.fan ?? "-"}
+          </small>
 
-          <small>{command.length} bytes</small>
+          <small>
+            Brand: {command.brand ?? "Unknown"}
+          </small>
 
-          <button className="secondary" onClick={() => onSend(command.id)}>
-            Send
-          </button>
+          <small>
+            Model: {command.model ?? "Unknown"}
+          </small>
 
-          <button
-            className="secondary danger"
-            onClick={() => onDelete(command.id)}
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              marginTop: 12,
+            }}
           >
-            Delete
-          </button>
+            <button
+              className="secondary"
+              onClick={() => onSend(command.id)}
+            >
+              ▶ Send
+            </button>
+
+            <button
+              className="secondary danger"
+              onClick={() => onDelete(command.id)}
+            >
+              🗑 Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>
