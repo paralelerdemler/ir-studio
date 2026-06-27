@@ -50,7 +50,7 @@ class IRService:
         self.broadlink_driver.send(command["code"])
 
         return command
-    
+
     def delete_command(self, command_id: str):
         deleted = self.command_repository.delete(command_id)
 
@@ -58,3 +58,14 @@ class IRService:
             raise RuntimeError("Command not found")
 
         return True
+
+    def verify_command(self, command_id: str, verified: bool):
+        command = self.command_repository.update(
+            command_id,
+            {"verified": verified},
+        )
+
+        if not command:
+            raise RuntimeError("Command not found")
+
+        return command

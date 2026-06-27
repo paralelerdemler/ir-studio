@@ -15,6 +15,10 @@ class LearnCommandRequest(BaseModel):
     state: IRState
 
 
+class VerifyCommandRequest(BaseModel):
+    verified: bool
+
+
 app = FastAPI()
 
 app.add_middleware(
@@ -108,6 +112,26 @@ def delete_command(command_id: str):
         return {
             "ok": True,
             "message": "Command deleted",
+        }
+
+    except Exception as e:
+        return {
+            "ok": False,
+            "error": str(e),
+        }
+
+
+@app.post("/commands/{command_id}/verify")
+def verify_command(command_id: str, request: VerifyCommandRequest):
+    try:
+        command = ir_service.verify_command(
+            command_id,
+            request.verified,
+        )
+
+        return {
+            "ok": True,
+            "command": command,
         }
 
     except Exception as e:

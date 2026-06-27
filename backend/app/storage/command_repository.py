@@ -23,6 +23,7 @@ class CommandRepository:
 
         command["id"] = str(uuid.uuid4())
         command["created_at"] = time.time()
+        command["verified"] = False
 
         commands.append(command)
 
@@ -46,7 +47,7 @@ class CommandRepository:
                 return command
 
         return None
-    
+
     def delete(self, command_id):
         commands = self.get_all()
 
@@ -62,3 +63,14 @@ class CommandRepository:
         self.save_all(new_commands)
 
         return True
+
+    def update(self, command_id, updates):
+        commands = self.get_all()
+
+        for command in commands:
+            if command.get("id") == command_id:
+                command.update(updates)
+                self.save_all(commands)
+                return command
+
+        return None

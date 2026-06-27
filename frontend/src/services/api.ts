@@ -55,6 +55,32 @@ export async function sendCommand(commandId: string) {
   return data;
 }
 
+export async function verifyCommand(
+  commandId: string,
+  verified: boolean
+) {
+  const response = await fetch(
+    `${API_URL}/commands/${commandId}/verify`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        verified,
+      }),
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok || !data.ok) {
+    throw new Error(data.error ?? "Verify failed");
+  }
+
+  return data;
+}
+
 export async function deleteCommand(commandId: string) {
   const response = await fetch(
     `${API_URL}/commands/${commandId}`,
