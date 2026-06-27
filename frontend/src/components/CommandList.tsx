@@ -1,22 +1,4 @@
-type CommandState = {
-  power: boolean;
-  mode: string;
-  temperature?: number;
-  fan?: number;
-  vertical_swing?: boolean;
-  clean?: boolean;
-};
-
-type Command = {
-  id: string;
-  name: string;
-  brand?: string;
-  model?: string;
-  state?: CommandState;
-  code: string;
-  length: number;
-  created_at: number;
-};
+import type { Command } from "../types/command";
 
 type Props = {
   commands: Command[];

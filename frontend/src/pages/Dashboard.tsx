@@ -9,37 +9,8 @@ import {
   learnCommand as learnCommandApi,
   sendCommand as sendCommandApi,
 } from "../services/api";
-
-type Device = {
-  ip: string;
-  port: number;
-  mac: string;
-  type: number;
-};
-
-type CommandState = {
-  power: boolean;
-  mode: string;
-  temperature?: number;
-  fan?: number;
-  vertical_swing?: boolean;
-  horizontal_swing?: boolean;
-  clean?: boolean;
-  sleep?: boolean;
-  eco?: boolean;
-  display?: boolean;
-};
-
-type Command = {
-  id: string;
-  brand?: string;
-  model?: string;
-  name: string;
-  state?: CommandState;
-  code: string;
-  length: number;
-  created_at: number;
-};
+import type { Command } from "../types/command";
+import type { Device } from "../types/device";
 
 function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
