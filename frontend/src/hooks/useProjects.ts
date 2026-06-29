@@ -1,14 +1,26 @@
 import { useEffect, useState } from "react";
 import { createProject, getProjects } from "../services/api";
 
+const SELECTED_PROJECT_KEY = "ir-studio:selected-project-id";
+
 export function useProjects() {
   const [projects, setProjects] = useState<any[]>([]);
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
-    null
+  const [selectedProjectId, setSelectedProjectIdState] = useState<string | null>(
+    () => localStorage.getItem(SELECTED_PROJECT_KEY)
   );
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  function setSelectedProjectId(projectId: string | null) {
+    setSelectedProjectIdState(projectId);
+
+    if (projectId) {
+      localStorage.setItem(SELECTED_PROJECT_KEY, projectId);
+    } else {
+      localStorage.removeItem(SELECTED_PROJECT_KEY);
+    }
+  }
 
   async function refreshProjects() {
     try {
@@ -16,11 +28,22 @@ export function useProjects() {
       setError("");
 
       const data = await getProjects();
-
       setProjects(data);
 
-      if (!selectedProjectId && data.length > 0) {
+      const savedProjectId = localStorage.getItem(SELECTED_PROJECT_KEY);
+      const savedProjectExists = data.some(
+        (project: any) => project.id === savedProjectId
+      );
+
+      if (savedProjectId && savedProjectExists) {
+        setSelectedProjectIdState(savedProjectId);
+        return;
+      }
+
+      if (data.length > 0) {
         setSelectedProjectId(data[0].id);
+      } else {
+        setSelectedProjectId(null);
       }
     } catch (err) {
       setError((err as Error).message);

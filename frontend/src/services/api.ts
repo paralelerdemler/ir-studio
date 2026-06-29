@@ -40,8 +40,12 @@ export async function createProject(project: unknown) {
   return data.project;
 }
 
-export async function getCommands() {
-  const response = await fetch(`${API_URL}/commands`);
+export async function getCommands(projectId?: string | null) {
+  const url = projectId
+    ? `${API_URL}/commands?project_id=${projectId}`
+    : `${API_URL}/commands`;
+
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error("Failed to load commands");

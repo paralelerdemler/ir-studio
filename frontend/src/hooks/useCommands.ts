@@ -8,7 +8,7 @@ import {
 
 import type { Command } from "../types/command";
 
-export function useCommands() {
+export function useCommands(projectId?: string | null) {
   const [commands, setCommands] = useState<Command[]>([]);
   const [isLoadingCommands, setIsLoadingCommands] = useState(false);
   const [commandsError, setCommandsError] = useState<string | null>(null);
@@ -18,7 +18,7 @@ export function useCommands() {
     setCommandsError(null);
 
     try {
-      const data = await getCommands();
+      const data = await getCommands(projectId);
       setCommands(data);
     } catch (err) {
       setCommands([]);
@@ -26,7 +26,7 @@ export function useCommands() {
     } finally {
       setIsLoadingCommands(false);
     }
-  }, []);
+  }, [projectId]);
 
   useEffect(() => {
     refreshCommands();

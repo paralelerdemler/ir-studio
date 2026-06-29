@@ -14,6 +14,15 @@ class CommandRepository:
 
         return json.loads(self.data_file.read_text())
 
+    def get_by_project_id(self, project_id):
+        commands = self.get_all()
+
+        return [
+            command
+            for command in commands
+            if command.get("project_id") == project_id
+        ]
+
     def save_all(self, commands):
         self.data_file.parent.mkdir(exist_ok=True)
         self.data_file.write_text(json.dumps(commands, indent=2))
@@ -23,7 +32,7 @@ class CommandRepository:
 
         command["id"] = str(uuid.uuid4())
         command["created_at"] = time.time()
-        command["verified"] = False
+        command["verified"] = command.get("verified", False)
 
         commands.append(command)
 

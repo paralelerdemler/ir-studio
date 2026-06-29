@@ -95,7 +95,10 @@ def create_project(request: CreateProjectRequest):
 
 
 @app.get("/commands")
-def get_commands():
+def get_commands(project_id: str | None = None):
+    if project_id:
+        return command_repository.get_by_project_id(project_id)
+
     return command_repository.get_all()
 
 
