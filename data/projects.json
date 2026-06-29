@@ -1,0 +1,30 @@
+[
+  {
+    "id": "20020b5c-ac2b-4530-aaf6-dfa89d1abc6a",
+    "name": "Salon Klima",
+    "brand": "Ar\u00e7elik",
+    "model": "Unknown",
+    "device_type": "air_conditioner",
+    "protocol": "broadlink",
+    "region": null,
+    "remote_type": null,
+    "notes": null,
+    "tags": [],
+    "created_at": 1782722526.546645,
+    "updated_at": 1782722526.546646
+  },
+  {
+    "id": "9600cc9b-0faa-4ecc-80c7-0249bef11bec",
+    "name": "Bedroom AC",
+    "brand": "LG",
+    "model": "S4-W12JA3AA",
+    "device_type": "air_conditioner",
+    "protocol": "broadlink",
+    "region": null,
+    "remote_type": null,
+    "notes": null,
+    "tags": [],
+    "created_at": 1782723396.241162,
+    "updated_at": 1782723396.241163
+  }
+]

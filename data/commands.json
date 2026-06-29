@@ -19,5 +19,51 @@
     "length": 68,
     "id": "72ed9da3-3932-4c5c-9593-2532b6b24bbd",
     "created_at": 1782474721.4670038
+  },
+  {
+    "project_id": "20020b5c-ac2b-4530-aaf6-dfa89d1abc6a",
+    "brand": "Ar\u00e7elik",
+    "model": "Unknown",
+    "name": "Power On 23C Fan2",
+    "state": {
+      "power": true,
+      "mode": "cool",
+      "temperature": 23,
+      "fan": 2,
+      "vertical_swing": false,
+      "horizontal_swing": null,
+      "clean": false,
+      "sleep": null,
+      "eco": null,
+      "display": null
+    },
+    "code": "JgBAAF4AAT0QMw8SDxIPEg80DhMOEw4TDhIQEQ8SDxIPEg8SDxIOEw41DhMOEw4SDzQPEg8SDjUOEw4TDxIONA8ADQU=",
+    "length": 68,
+    "verified": false,
+    "id": "c428bbde-8ae3-4e93-bd59-4bf9468bcf73",
+    "created_at": 1782724405.287296
+  },
+  {
+    "project_id": "20020b5c-ac2b-4530-aaf6-dfa89d1abc6a",
+    "brand": "Ar\u00e7elik",
+    "model": "Unknown",
+    "name": "Power On 22C Fan2",
+    "state": {
+      "power": true,
+      "mode": "cool",
+      "temperature": 22,
+      "fan": 2,
+      "vertical_swing": false,
+      "horizontal_swing": null,
+      "clean": false,
+      "sleep": null,
+      "eco": null,
+      "display": null
+    },
+    "code": "JgBAAF4AAT0QMw8SDhMOEw41DhIPEg8SDxIPEg8SDxIPEg4TDhMOEw4TDjQQMw80DzQOEw4TDjQPEg8SDxIPEg8ADQU=",
+    "length": 68,
+    "verified": true,
+    "id": "0d5a1c2d-90fe-4024-897b-ba43160bee84",
+    "created_at": 1782725400.405138
   }
 ]

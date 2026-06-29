@@ -41,16 +41,66 @@ function LearnPanel({
   onCleanChange,
   onLearn,
 }: Props) {
+  if (isLearning) {
+    return (
+      <div className="learn-panel">
+        <h2>📡 Listening for IR Signal</h2>
+
+        <p className="hint">
+          Point your remote at the Broadlink device and press the target button.
+        </p>
+
+        <div
+          style={{
+            fontSize: 72,
+            textAlign: "center",
+            margin: "32px 0",
+          }}
+        >
+          📡
+        </div>
+
+        <div
+          style={{
+            width: "100%",
+            height: 8,
+            borderRadius: 999,
+            background: "#1e293b",
+            overflow: "hidden",
+            marginBottom: 24,
+          }}
+        >
+          <div
+            style={{
+              width: "45%",
+              height: "100%",
+              background: "#3b82f6",
+              animation: "pulse 1.2s infinite",
+            }}
+          />
+        </div>
+
+        <p
+          style={{
+            textAlign: "center",
+            color: "#94a3b8",
+          }}
+        >
+          Waiting for infrared signal...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="learn-panel">
-      <h2>Learn New Command</h2>
+      <h2>Capture IR Command</h2>
 
       <label>
         Brand
         <input
           value={brand}
           onChange={(e) => onBrandChange(e.target.value)}
-          disabled={isLearning}
         />
       </label>
 
@@ -59,7 +109,6 @@ function LearnPanel({
         <input
           value={model}
           onChange={(e) => onModelChange(e.target.value)}
-          disabled={isLearning}
         />
       </label>
 
@@ -68,7 +117,6 @@ function LearnPanel({
         <input
           value={commandName}
           onChange={(e) => onCommandNameChange(e.target.value)}
-          disabled={isLearning}
         />
       </label>
 
@@ -77,7 +125,6 @@ function LearnPanel({
         <select
           value={mode}
           onChange={(e) => onModeChange(e.target.value)}
-          disabled={isLearning}
         >
           <option value="cool">Cool</option>
           <option value="heat">Heat</option>
@@ -95,7 +142,6 @@ function LearnPanel({
           max={30}
           value={temperature}
           onChange={(e) => onTemperatureChange(Number(e.target.value))}
-          disabled={isLearning}
         />
       </label>
 
@@ -104,7 +150,6 @@ function LearnPanel({
         <select
           value={fan}
           onChange={(e) => onFanChange(Number(e.target.value))}
-          disabled={isLearning}
         >
           <option value={1}>Fan 1</option>
           <option value={2}>Fan 2</option>
@@ -120,7 +165,6 @@ function LearnPanel({
           type="checkbox"
           checked={verticalSwing}
           onChange={(e) => onVerticalSwingChange(e.target.checked)}
-          disabled={isLearning}
         />
         Vertical Swing
       </label>
@@ -130,18 +174,16 @@ function LearnPanel({
           type="checkbox"
           checked={clean}
           onChange={(e) => onCleanChange(e.target.checked)}
-          disabled={isLearning}
         />
         Clean
       </label>
 
       <p className="hint">
-        Press Learn, then point the remote at the Broadlink and send the IR
-        command once.
+        Configure the desired device state, then start learning.
       </p>
 
-      <button onClick={onLearn} disabled={isLearning}>
-        {isLearning ? "Waiting for IR Signal..." : "Learn Command"}
+      <button onClick={onLearn}>
+        📡 Start Learning
       </button>
     </div>
   );

@@ -13,6 +13,7 @@ class IRService:
 
     def learn_command(
         self,
+        project_id: str | None,
         brand: str,
         model: str,
         name: str,
@@ -21,12 +22,14 @@ class IRService:
         result = self.broadlink_driver.learn()
 
         command = self.command_repository.add({
-            "brand": brand,
-            "model": model,
+            "project_id": project_id,
+            "brand": brand,      # TODO: kaldırılacak
+            "model": model,      # TODO: kaldırılacak
             "name": name,
             "state": state,
             "code": result["code"],
             "length": result["length"],
+            "verified": False,
         })
 
         return command

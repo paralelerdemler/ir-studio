@@ -2,9 +2,12 @@ import { useState } from "react";
 import { learnCommand as learnCommandApi } from "../services/api";
 
 type LearnCommandPayload = {
+  project_id?: string;
+
   brand: string;
   model: string;
   name: string;
+
   state: {
     power: boolean;
     mode: string;
@@ -15,8 +18,15 @@ type LearnCommandPayload = {
   };
 };
 
-export function useLearning(onLearned: () => Promise<void>) {
+export function useLearning(
+  onLearned: () => Promise<void>,
+  selectedProjectId: string | null,
+) {
   const [isLearning, setIsLearning] = useState(false);
+
+  const [learningSuccess, setLearningSuccess] = useState(false);
+  const [learnedCommandId, setLearnedCommandId] = useState<string | null>(null);
+
   const [showLearnForm, setShowLearnForm] = useState(false);
   const [learningError, setLearningError] = useState<string | null>(null);
 
@@ -31,12 +41,16 @@ export function useLearning(onLearned: () => Promise<void>) {
 
   async function learnCommand() {
     setIsLearning(true);
+    setLearningSuccess(false);
     setLearningError(null);
 
     const payload: LearnCommandPayload = {
+      project_id: selectedProjectId ?? undefined,
+
       brand,
       model,
       name: commandName,
+
       state: {
         power: true,
         mode,
@@ -48,8 +62,13 @@ export function useLearning(onLearned: () => Promise<void>) {
     };
 
     try {
-      await learnCommandApi(payload);
+      const result = await learnCommandApi(payload);
+
+      setLearnedCommandId(result.command.id);
+      setLearningSuccess(true);
+
       setShowLearnForm(false);
+
       await onLearned();
     } catch (err) {
       setLearningError(err instanceof Error ? err.message : "Unknown error");
@@ -58,26 +77,45 @@ export function useLearning(onLearned: () => Promise<void>) {
     }
   }
 
+  function resetLearning() {
+    setLearningSuccess(false);
+    setLearnedCommandId(null);
+  }
+
   return {
     isLearning,
+
+    learningSuccess,
+    learnedCommandId,
+
+    resetLearning,
+
     showLearnForm,
     setShowLearnForm,
+
     learningError,
 
     commandName,
     setCommandName,
+
     brand,
     setBrand,
+
     model,
     setModel,
+
     mode,
     setMode,
+
     temperature,
     setTemperature,
+
     fan,
     setFan,
+
     verticalSwing,
     setVerticalSwing,
+
     clean,
     setClean,
 

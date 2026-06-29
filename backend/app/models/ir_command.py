@@ -25,6 +25,9 @@ class IRCommand(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid4()))
     created_at: float = Field(default_factory=time.time)
 
+    project_id: Optional[str] = None
+
+    # Geçici (migration tamamlanınca kaldırılacak)
     brand: str
     model: str
 

@@ -1,6 +1,8 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard";
+import Projects from "../pages/Projects";
+import Learn from "../pages/Learn";
 
 function PlaceholderPage({ title }: { title: string }) {
   return (
@@ -21,6 +23,7 @@ function AppRouter() {
 
         <nav className="sidebar-nav">
           <NavLink to="/">🏠 Dashboard</NavLink>
+          <NavLink to="/projects">📁 Projects</NavLink>
           <NavLink to="/commands">📚 Commands</NavLink>
           <NavLink to="/learn">🎓 Learn</NavLink>
           <NavLink to="/analyzer">📊 Analyzer</NavLink>
@@ -32,8 +35,9 @@ function AppRouter() {
       <main className="shell-main">
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/projects" element={<Projects />} />
           <Route path="/commands" element={<PlaceholderPage title="Command Library" />} />
-          <Route path="/learn" element={<PlaceholderPage title="Learn Wizard" />} />
+          <Route path="/learn" element={<Learn />} />
           <Route path="/analyzer" element={<PlaceholderPage title="Analyzer" />} />
           <Route path="/export" element={<PlaceholderPage title="Export" />} />
           <Route path="/settings" element={<PlaceholderPage title="Settings" />} />

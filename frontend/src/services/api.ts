@@ -10,6 +10,36 @@ export async function discover() {
   return response.json();
 }
 
+export async function getProjects() {
+  const response = await fetch(`${API_URL}/projects`);
+
+  const data = await response.json();
+
+  if (!response.ok || !data.ok) {
+    throw new Error(data.error ?? "Failed to load projects");
+  }
+
+  return data.projects;
+}
+
+export async function createProject(project: unknown) {
+  const response = await fetch(`${API_URL}/projects`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(project),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok || !data.ok) {
+    throw new Error(data.error ?? "Failed to create project");
+  }
+
+  return data.project;
+}
+
 export async function getCommands() {
   const response = await fetch(`${API_URL}/commands`);
 
@@ -39,12 +69,9 @@ export async function learnCommand(command: unknown) {
 }
 
 export async function sendCommand(commandId: string) {
-  const response = await fetch(
-    `${API_URL}/commands/send/${commandId}`,
-    {
-      method: "POST",
-    }
-  );
+  const response = await fetch(`${API_URL}/commands/send/${commandId}`, {
+    method: "POST",
+  });
 
   const data = await response.json();
 
@@ -55,22 +82,14 @@ export async function sendCommand(commandId: string) {
   return data;
 }
 
-export async function verifyCommand(
-  commandId: string,
-  verified: boolean
-) {
-  const response = await fetch(
-    `${API_URL}/commands/${commandId}/verify`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        verified,
-      }),
-    }
-  );
+export async function verifyCommand(commandId: string, verified: boolean) {
+  const response = await fetch(`${API_URL}/commands/${commandId}/verify`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ verified }),
+  });
 
   const data = await response.json();
 
@@ -82,17 +101,28 @@ export async function verifyCommand(
 }
 
 export async function deleteCommand(commandId: string) {
-  const response = await fetch(
-    `${API_URL}/commands/${commandId}`,
-    {
-      method: "DELETE",
-    }
-  );
+  const response = await fetch(`${API_URL}/commands/${commandId}`, {
+    method: "DELETE",
+  });
 
   const data = await response.json();
 
   if (!response.ok || !data.ok) {
     throw new Error(data.error ?? "Delete failed");
+  }
+
+  return data;
+}
+
+export async function sendLastCommand() {
+  const response = await fetch(`${API_URL}/commands/send-last`, {
+    method: "POST",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok || !data.ok) {
+    throw new Error(data.error ?? "Test failed");
   }
 
   return data;
