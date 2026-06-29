@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createProject, getProjects } from "../services/api";
 
 const SELECTED_PROJECT_KEY = "ir-studio:selected-project-id";
+const SELECTED_PROJECT_EVENT = "ir-studio:selected-project-changed";
 
 export function useProjects() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -20,6 +21,8 @@ export function useProjects() {
     } else {
       localStorage.removeItem(SELECTED_PROJECT_KEY);
     }
+
+    window.dispatchEvent(new Event(SELECTED_PROJECT_EVENT));
   }
 
   async function refreshProjects() {
@@ -66,12 +69,22 @@ export function useProjects() {
     setSelectedProjectId(created.id);
   }
 
-  const selectedProject =
-    projects.find((p) => p.id === selectedProjectId) ?? null;
-
   useEffect(() => {
     refreshProjects();
+
+    function syncSelectedProject() {
+      setSelectedProjectIdState(localStorage.getItem(SELECTED_PROJECT_KEY));
+    }
+
+    window.addEventListener(SELECTED_PROJECT_EVENT, syncSelectedProject);
+
+    return () => {
+      window.removeEventListener(SELECTED_PROJECT_EVENT, syncSelectedProject);
+    };
   }, []);
+
+  const selectedProject =
+    projects.find((p) => p.id === selectedProjectId) ?? null;
 
   return {
     projects,

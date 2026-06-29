@@ -1,15 +1,9 @@
 import CommandList from "../components/CommandList";
-import ProjectSelector from "../components/ProjectSelector";
 import { useCommands } from "../hooks/useCommands";
 import { useProjects } from "../hooks/useProjects";
 
 function Commands() {
-  const {
-    projects,
-    selectedProject,
-    selectedProjectId,
-    setSelectedProjectId,
-  } = useProjects();
+  const { selectedProject } = useProjects();
 
   const {
     commands,
@@ -18,18 +12,12 @@ function Commands() {
     refreshCommands,
     sendCommand,
     deleteCommand,
-  } = useCommands(selectedProjectId);
+  } = useCommands(selectedProject?.id);
 
   return (
     <div className="app">
       <div className="card">
         <h1>Command Library</h1>
-
-        <ProjectSelector
-          projects={projects}
-          selectedProjectId={selectedProjectId}
-          onChange={setSelectedProjectId}
-        />
 
         {!selectedProject && (
           <p className="error">Please create or select a project first.</p>
@@ -37,6 +25,10 @@ function Commands() {
 
         {selectedProject && (
           <>
+            <p className="subtitle">
+              Current Project: {selectedProject.name}
+            </p>
+
             {isLoadingCommands && (
               <p className="subtitle">Loading commands...</p>
             )}

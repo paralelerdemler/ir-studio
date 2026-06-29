@@ -1,23 +1,20 @@
 import { useState } from "react";
 
 import LearnPanel from "../components/LearnPanel";
-import ProjectSelector from "../components/ProjectSelector";
 import { useCommands } from "../hooks/useCommands";
 import { useLearning } from "../hooks/useLearning";
 import { useProjects } from "../hooks/useProjects";
 import { sendCommand, verifyCommand } from "../services/api";
 
 function Learn() {
-  const {
-    projects,
-    selectedProject,
-    selectedProjectId,
-    setSelectedProjectId,
-  } = useProjects();
+  const { selectedProject } = useProjects();
 
-  const { refreshCommands } = useCommands(selectedProjectId);
+  const { refreshCommands } = useCommands(selectedProject?.id);
 
-  const learning = useLearning(refreshCommands, selectedProjectId);
+  const learning = useLearning(
+    refreshCommands,
+    selectedProject?.id ?? null,
+  );
 
   const [isTesting, setIsTesting] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
@@ -59,12 +56,6 @@ function Learn() {
       <div className="card">
         <h1>Learn Wizard</h1>
 
-        <ProjectSelector
-          projects={projects}
-          selectedProjectId={selectedProjectId}
-          onChange={setSelectedProjectId}
-        />
-
         {!selectedProject && (
           <p className="error">Please create or select a project first.</p>
         )}
@@ -72,7 +63,7 @@ function Learn() {
         {selectedProject && !learning.learningSuccess ? (
           <>
             <p className="subtitle">
-              Define a climate state, then capture the matching IR command.
+              Current Project: {selectedProject.name}
             </p>
 
             <LearnPanel

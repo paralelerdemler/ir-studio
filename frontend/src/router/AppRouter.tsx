@@ -1,5 +1,8 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 
+import ProjectSelector from "../components/ProjectSelector";
+import { useProjects } from "../hooks/useProjects";
+
 import Dashboard from "../pages/Dashboard";
 import Projects from "../pages/Projects";
 import Commands from "../pages/Commands";
@@ -17,10 +20,22 @@ function PlaceholderPage({ title }: { title: string }) {
 }
 
 function AppRouter() {
+  const {
+    projects,
+    selectedProjectId,
+    setSelectedProjectId,
+  } = useProjects();
+
   return (
     <div className="shell">
       <aside className="sidebar">
         <div className="sidebar-title">IR Studio</div>
+
+        <ProjectSelector
+          projects={projects}
+          selectedProjectId={selectedProjectId}
+          onChange={setSelectedProjectId}
+        />
 
         <nav className="sidebar-nav">
           <NavLink to="/">🏠 Dashboard</NavLink>
